@@ -52,11 +52,11 @@ To build the JAR, runs the next command line.
 * For Linux or Mac:
   `./gradlew build`
 
-This will generate the executable `build/libs/career-switch-challenge-1.0-SNAPSHOT.jar`
+This will generate the executable `build/libs/career-switch-challenge.jar`
 
 ## Execute application ⚙️
 This is a JAR application, it's designed to run on console, to execute use the next command
-`java -jar career-switch-challenge-1.0-SNAPSHOT.jar`
+`java -jar build/libs/career-switch-challenge.jar`
 
 ## Tests ✅
 
