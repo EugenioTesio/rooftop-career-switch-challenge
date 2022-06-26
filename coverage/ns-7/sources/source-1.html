@@ -1,0 +1,225 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > HttpClientServiceImpl</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">dev.rooftop.core.httpclient.services.impl</a>
+</div>
+
+<h1>Coverage Summary for Class: HttpClientServiceImpl (dev.rooftop.core.httpclient.services.impl)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">HttpClientServiceImpl</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    84.6%
+  </span>
+  <span class="absValue">
+    (11/13)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    86.3%
+  </span>
+  <span class="absValue">
+    (44/51)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package dev.rooftop.core.httpclient.services.impl;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import com.fasterxml.jackson.databind.ObjectMapper;
+<i class="no-highlight">4</i>&nbsp;import dev.rooftop.core.config.AppConfig;
+<i class="no-highlight">5</i>&nbsp;import dev.rooftop.core.httpclient.domain.HttpRequest;
+<i class="no-highlight">6</i>&nbsp;import dev.rooftop.core.httpclient.exceptions.CustomHttpException;
+<i class="no-highlight">7</i>&nbsp;import dev.rooftop.core.httpclient.interceptors.AuthInterceptor;
+<i class="no-highlight">8</i>&nbsp;import dev.rooftop.core.httpclient.services.AbstractHttpClientService;
+<i class="no-highlight">9</i>&nbsp;import java.io.IOException;
+<i class="no-highlight">10</i>&nbsp;import java.util.Objects;
+<i class="no-highlight">11</i>&nbsp;import okhttp3.Headers;
+<i class="no-highlight">12</i>&nbsp;import okhttp3.HttpUrl;
+<i class="no-highlight">13</i>&nbsp;import okhttp3.MediaType;
+<i class="no-highlight">14</i>&nbsp;import okhttp3.OkHttpClient;
+<i class="no-highlight">15</i>&nbsp;import okhttp3.Request;
+<i class="no-highlight">16</i>&nbsp;import okhttp3.RequestBody;
+<i class="no-highlight">17</i>&nbsp;import okhttp3.Response;
+<i class="no-highlight">18</i>&nbsp;
+<i class="no-highlight">19</i>&nbsp;public class HttpClientServiceImpl extends AbstractHttpClientService {
+<i class="no-highlight">20</i>&nbsp;
+<b class="fc"><i class="no-highlight">21</i>&nbsp;    private static final MediaType APPLICATION_JSON = MediaType.parse(&quot;application/json&quot;);</b>
+<i class="no-highlight">22</i>&nbsp;    private static HttpClientServiceImpl INSTANCE;
+<i class="no-highlight">23</i>&nbsp;    private final OkHttpClient okHttpClient;
+<i class="no-highlight">24</i>&nbsp;    private final ObjectMapper objectMapper;
+<i class="no-highlight">25</i>&nbsp;    private final String url;
+<i class="no-highlight">26</i>&nbsp;
+<b class="fc"><i class="no-highlight">27</i>&nbsp;    private HttpClientServiceImpl(String url) {</b>
+<b class="fc"><i class="no-highlight">28</i>&nbsp;        this.url = url;</b>
+<b class="fc"><i class="no-highlight">29</i>&nbsp;        okHttpClient = buildOkHttpClient();</b>
+<b class="fc"><i class="no-highlight">30</i>&nbsp;        objectMapper = new ObjectMapper();</b>
+<i class="no-highlight">31</i>&nbsp;    }
+<i class="no-highlight">32</i>&nbsp;
+<i class="no-highlight">33</i>&nbsp;    public static HttpClientServiceImpl getInstance(String url) {
+<b class="fc"><i class="no-highlight">34</i>&nbsp;        if (INSTANCE == null) {</b>
+<b class="fc"><i class="no-highlight">35</i>&nbsp;            INSTANCE = new HttpClientServiceImpl(url);</b>
+<i class="no-highlight">36</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">37</i>&nbsp;        return INSTANCE;</b>
+<i class="no-highlight">38</i>&nbsp;    }
+<i class="no-highlight">39</i>&nbsp;
+<i class="no-highlight">40</i>&nbsp;    public static HttpClientServiceImpl getInstance() {
+<b class="fc"><i class="no-highlight">41</i>&nbsp;        String url = AppConfig.getInstance().getUrl();</b>
+<b class="fc"><i class="no-highlight">42</i>&nbsp;        return getInstance(url);</b>
+<i class="no-highlight">43</i>&nbsp;    }
+<i class="no-highlight">44</i>&nbsp;
+<i class="no-highlight">45</i>&nbsp;    @Override
+<i class="no-highlight">46</i>&nbsp;    public &lt;T&gt; T get(HttpRequest httpRequest, Class&lt;T&gt; clazz)
+<i class="no-highlight">47</i>&nbsp;            throws CustomHttpException, IOException {
+<i class="no-highlight">48</i>&nbsp;
+<b class="fc"><i class="no-highlight">49</i>&nbsp;        Headers headers = buildHeaders(httpRequest);</b>
+<b class="fc"><i class="no-highlight">50</i>&nbsp;        HttpUrl httpUrl = buildUrl(httpRequest);</b>
+<i class="no-highlight">51</i>&nbsp;
+<b class="fc"><i class="no-highlight">52</i>&nbsp;        Request request = new Request.Builder()</b>
+<b class="fc"><i class="no-highlight">53</i>&nbsp;                .url(httpUrl)</b>
+<b class="fc"><i class="no-highlight">54</i>&nbsp;                .headers(headers)</b>
+<b class="fc"><i class="no-highlight">55</i>&nbsp;                .get()</b>
+<b class="fc"><i class="no-highlight">56</i>&nbsp;                .build();</b>
+<i class="no-highlight">57</i>&nbsp;
+<b class="fc"><i class="no-highlight">58</i>&nbsp;        Response response = okHttpClient.newCall(request).execute();</b>
+<b class="fc"><i class="no-highlight">59</i>&nbsp;        if (response.code() != 200) {</b>
+<b class="fc"><i class="no-highlight">60</i>&nbsp;            throw new CustomHttpException(response.message(), response.code());</b>
+<i class="no-highlight">61</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">62</i>&nbsp;        String responseString = Objects.requireNonNull(response.body()).string();</b>
+<b class="fc"><i class="no-highlight">63</i>&nbsp;        return objectMapper.readValue(responseString, clazz);</b>
+<i class="no-highlight">64</i>&nbsp;    }
+<i class="no-highlight">65</i>&nbsp;
+<i class="no-highlight">66</i>&nbsp;    @Override
+<i class="no-highlight">67</i>&nbsp;    public &lt;T&gt; T post(HttpRequest httpRequest, Class&lt;T&gt; clazz)
+<i class="no-highlight">68</i>&nbsp;            throws CustomHttpException, IOException {
+<b class="fc"><i class="no-highlight">69</i>&nbsp;        Headers headers = buildHeaders(httpRequest);</b>
+<b class="fc"><i class="no-highlight">70</i>&nbsp;        HttpUrl httpUrl = buildUrl(httpRequest);</b>
+<b class="fc"><i class="no-highlight">71</i>&nbsp;        RequestBody requestBody = RequestBody.create(</b>
+<b class="fc"><i class="no-highlight">72</i>&nbsp;                objectMapper.writeValueAsString(httpRequest.getBody()), APPLICATION_JSON);</b>
+<i class="no-highlight">73</i>&nbsp;
+<b class="fc"><i class="no-highlight">74</i>&nbsp;        Request request = new Request.Builder()</b>
+<b class="fc"><i class="no-highlight">75</i>&nbsp;                .url(httpUrl)</b>
+<b class="fc"><i class="no-highlight">76</i>&nbsp;                .headers(headers)</b>
+<b class="fc"><i class="no-highlight">77</i>&nbsp;                .post(requestBody)</b>
+<b class="fc"><i class="no-highlight">78</i>&nbsp;                .build();</b>
+<i class="no-highlight">79</i>&nbsp;
+<b class="fc"><i class="no-highlight">80</i>&nbsp;        Response response = okHttpClient.newCall(request).execute();</b>
+<b class="fc"><i class="no-highlight">81</i>&nbsp;        if (response.code() != 200) {</b>
+<b class="fc"><i class="no-highlight">82</i>&nbsp;            throw new CustomHttpException(response.message(), response.code());</b>
+<i class="no-highlight">83</i>&nbsp;        }
+<b class="nc"><i class="no-highlight">84</i>&nbsp;        return objectMapper.readValue(Objects.requireNonNull(response.body()).string(), clazz);</b>
+<i class="no-highlight">85</i>&nbsp;    }
+<i class="no-highlight">86</i>&nbsp;
+<i class="no-highlight">87</i>&nbsp;    private HttpUrl buildUrl(HttpRequest httpRequest) {
+<b class="fc"><i class="no-highlight">88</i>&nbsp;        HttpUrl.Builder urlBuilder = Objects.requireNonNull(</b>
+<b class="fc"><i class="no-highlight">89</i>&nbsp;                HttpUrl.parse(url + &quot;/&quot; + httpRequest.getPath())).newBuilder();</b>
+<b class="fc"><i class="no-highlight">90</i>&nbsp;        if (httpRequest.getHttpQueryParam() != null) {</b>
+<b class="nc"><i class="no-highlight">91</i>&nbsp;            httpRequest.getHttpQueryParam()</b>
+<b class="nc"><i class="no-highlight">92</i>&nbsp;                    .forEach(</b>
+<b class="nc"><i class="no-highlight">93</i>&nbsp;                            httpQueryParam -&gt; urlBuilder.setQueryParameter(httpQueryParam.getName(),</b>
+<b class="nc"><i class="no-highlight">94</i>&nbsp;                                    httpQueryParam.getValue()));</b>
+<i class="no-highlight">95</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">96</i>&nbsp;        return urlBuilder.build();</b>
+<i class="no-highlight">97</i>&nbsp;    }
+<i class="no-highlight">98</i>&nbsp;
+<i class="no-highlight">99</i>&nbsp;    private Headers buildHeaders(HttpRequest httpRequest) {
+<b class="fc"><i class="no-highlight">100</i>&nbsp;        Headers.Builder headersBuilder = new Headers.Builder();</b>
+<b class="fc"><i class="no-highlight">101</i>&nbsp;        if (httpRequest.getHeaders() != null) {</b>
+<b class="nc"><i class="no-highlight">102</i>&nbsp;            httpRequest.getHeaders().forEach(</b>
+<b class="nc"><i class="no-highlight">103</i>&nbsp;                    httpHeader -&gt; headersBuilder.add(httpHeader.getName(), httpHeader.getValue()));</b>
+<i class="no-highlight">104</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">105</i>&nbsp;        return headersBuilder.build();</b>
+<i class="no-highlight">106</i>&nbsp;    }
+<i class="no-highlight">107</i>&nbsp;
+<i class="no-highlight">108</i>&nbsp;
+<i class="no-highlight">109</i>&nbsp;    private OkHttpClient buildOkHttpClient() {
+<b class="fc"><i class="no-highlight">110</i>&nbsp;        return new OkHttpClient.Builder().addInterceptor(new AuthInterceptor()).build();</b>
+<i class="no-highlight">111</i>&nbsp;    }
+<i class="no-highlight">112</i>&nbsp;
+<i class="no-highlight">113</i>&nbsp;    public OkHttpClient getOkHttpClient() {
+<b class="fc"><i class="no-highlight">114</i>&nbsp;        return okHttpClient;</b>
+<i class="no-highlight">115</i>&nbsp;    }
+<i class="no-highlight">116</i>&nbsp;
+<i class="no-highlight">117</i>&nbsp;    public String getUrl() {
+<b class="fc"><i class="no-highlight">118</i>&nbsp;        return url;</b>
+<i class="no-highlight">119</i>&nbsp;    }
+<i class="no-highlight">120</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2022-06-26 13:03</div>
+</div>
+</body>
+</html>

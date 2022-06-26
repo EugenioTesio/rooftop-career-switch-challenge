@@ -1,0 +1,130 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > Helper</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">dev.rooftop.core.utils</a>
+</div>
+
+<h1>Coverage Summary for Class: Helper (dev.rooftop.core.utils)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Helper</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (1/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    63.6%
+  </span>
+  <span class="absValue">
+    (7/11)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package dev.rooftop.core.utils;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import java.io.File;
+<i class="no-highlight">4</i>&nbsp;import java.io.FileInputStream;
+<i class="no-highlight">5</i>&nbsp;import java.io.IOException;
+<i class="no-highlight">6</i>&nbsp;import java.util.Properties;
+<i class="no-highlight">7</i>&nbsp;
+<b class="nc"><i class="no-highlight">8</i>&nbsp;public class Helper {</b>
+<i class="no-highlight">9</i>&nbsp;
+<i class="no-highlight">10</i>&nbsp;    public static Properties getExternalConfiguration(String filename) {
+<b class="fc"><i class="no-highlight">11</i>&nbsp;        Properties properties = new Properties();</b>
+<b class="fc"><i class="no-highlight">12</i>&nbsp;        File external = new File(filename);</b>
+<i class="no-highlight">13</i>&nbsp;        try {
+<b class="fc"><i class="no-highlight">14</i>&nbsp;            if (external.exists()) {</b>
+<b class="nc"><i class="no-highlight">15</i>&nbsp;                properties.load(new FileInputStream(external));</b>
+<i class="no-highlight">16</i>&nbsp;            } else {
+<b class="fc"><i class="no-highlight">17</i>&nbsp;                properties.load(</b>
+<b class="fc"><i class="no-highlight">18</i>&nbsp;                    Helper.class.getClassLoader().getResourceAsStream(&quot;app.properties&quot;));</b>
+<i class="no-highlight">19</i>&nbsp;            }
+<b class="nc"><i class="no-highlight">20</i>&nbsp;        } catch (IOException e) {</b>
+<b class="nc"><i class="no-highlight">21</i>&nbsp;            e.printStackTrace();</b>
+<b class="fc"><i class="no-highlight">22</i>&nbsp;        }</b>
+<b class="fc"><i class="no-highlight">23</i>&nbsp;        return properties;</b>
+<i class="no-highlight">24</i>&nbsp;    }
+<i class="no-highlight">25</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2022-06-26 13:03</div>
+</div>
+</body>
+</html>

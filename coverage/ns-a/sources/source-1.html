@@ -1,0 +1,145 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > FakeBlocksRepository</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">dev.rooftop.riddle.repositories.impl</a>
+</div>
+
+<h1>Coverage Summary for Class: FakeBlocksRepository (dev.rooftop.riddle.repositories.impl)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">FakeBlocksRepository</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (17/17)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package dev.rooftop.riddle.repositories.impl;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import dev.rooftop.riddle.domain.Blocks;
+<i class="no-highlight">4</i>&nbsp;import dev.rooftop.riddle.repositories.BlocksRepository;
+<i class="no-highlight">5</i>&nbsp;import java.util.ArrayList;
+<i class="no-highlight">6</i>&nbsp;import java.util.Collections;
+<i class="no-highlight">7</i>&nbsp;import java.util.List;
+<i class="no-highlight">8</i>&nbsp;
+<b class="fc"><i class="no-highlight">9</i>&nbsp;public class FakeBlocksRepository implements BlocksRepository {</b>
+<i class="no-highlight">10</i>&nbsp;
+<b class="fc"><i class="no-highlight">11</i>&nbsp;  List&lt;String&gt; data = List.of(&quot;qwer&quot;, &quot;asdf&quot;, &quot;zcvf&quot;, &quot;erty&quot;, &quot;jhgf&quot;, &quot;polk&quot;, &quot;gthu&quot;, &quot;uhgt&quot;);</b>
+<i class="no-highlight">12</i>&nbsp;
+<i class="no-highlight">13</i>&nbsp;  @Override
+<i class="no-highlight">14</i>&nbsp;  public Blocks getBlocks() {
+<b class="fc"><i class="no-highlight">15</i>&nbsp;    List&lt;String&gt; unsortedList = new ArrayList&lt;&gt;(data);</b>
+<b class="fc"><i class="no-highlight">16</i>&nbsp;    unsortedList.remove(0);</b>
+<b class="fc"><i class="no-highlight">17</i>&nbsp;    Collections.shuffle(unsortedList);</b>
+<b class="fc"><i class="no-highlight">18</i>&nbsp;    unsortedList.add(0, data.get(0));</b>
+<i class="no-highlight">19</i>&nbsp;
+<b class="fc"><i class="no-highlight">20</i>&nbsp;    return Blocks.builder()</b>
+<b class="fc"><i class="no-highlight">21</i>&nbsp;        .chunkSize(4)</b>
+<b class="fc"><i class="no-highlight">22</i>&nbsp;        .length(32)</b>
+<b class="fc"><i class="no-highlight">23</i>&nbsp;        .data(unsortedList.toArray(String[]::new))</b>
+<b class="fc"><i class="no-highlight">24</i>&nbsp;        .build();</b>
+<i class="no-highlight">25</i>&nbsp;  }
+<i class="no-highlight">26</i>&nbsp;
+<i class="no-highlight">27</i>&nbsp;  @Override
+<i class="no-highlight">28</i>&nbsp;  public boolean check(String block1, String block2) {
+<b class="fc"><i class="no-highlight">29</i>&nbsp;    Integer indexBlock1 = data.indexOf(block1);</b>
+<b class="fc"><i class="no-highlight">30</i>&nbsp;    Integer indexBlock2 = data.indexOf(block2);</b>
+<b class="fc"><i class="no-highlight">31</i>&nbsp;    if (indexBlock1 == -1 || indexBlock2 == -1) {</b>
+<b class="fc"><i class="no-highlight">32</i>&nbsp;      return false;</b>
+<i class="no-highlight">33</i>&nbsp;    }
+<b class="fc"><i class="no-highlight">34</i>&nbsp;    return indexBlock2 - indexBlock1 == 1;</b>
+<i class="no-highlight">35</i>&nbsp;  }
+<i class="no-highlight">36</i>&nbsp;
+<i class="no-highlight">37</i>&nbsp;  public String[] getTestArray() {
+<b class="fc"><i class="no-highlight">38</i>&nbsp;    return data.toArray(String[]::new);</b>
+<i class="no-highlight">39</i>&nbsp;  }
+<i class="no-highlight">40</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2022-06-26 13:03</div>
+</div>
+</body>
+</html>
