@@ -36,15 +36,15 @@
     ```
    You'll get `{"message":true}` if _"qwer"_ is after _"jhgf"_, otherwise `{"message":false}`.
 
-#### Considerations 👀
+### Considerations 👀
 
 * Optimize the code sending the less amount of request to the server
 * Be careful about using recursive or iterative structures, be sure they don't produce infinite loops. Test the code before trying the API.
 
-### Requirements ✅
+## Requirements 👍
 + [JDK 11](https://adoptium.net/temurin/releases?version=11) or later
 
-### Build 🔨
+## Build 🔨
 To build the JAR, runs the next command line.
 * For Windows:
   `./gradlew.bat build`
@@ -54,6 +54,16 @@ To build the JAR, runs the next command line.
 
 This will generate the executable `build/libs/career-switch-challenge-1.0-SNAPSHOT.jar`
 
-### Execute application ⚙️
+## Execute application ⚙️
 This is a JAR application, it's designed to run on console, to execute use the next command
-`$ java -jar career-switch-challenge-1.0-SNAPSHOT.jar`
+`java -jar career-switch-challenge-1.0-SNAPSHOT.jar`
+
+## Tests ✅
+
+To running test use:
+* For Windows:
+  `./gradlew.bat clean test`
+
+* For Linux or Mac:
+  `./gradlew clean test`
+
